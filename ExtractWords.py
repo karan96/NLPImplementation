@@ -1,5 +1,7 @@
 import pandas as pd
 from gensim.models import Word2Vec
+import pytrec_eval
+import json
 
 w = list(range(2, 11))
 d = list(range(10, 100, 10)) + list(range(100, 600, 100))

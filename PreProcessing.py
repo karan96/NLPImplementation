@@ -1,16 +1,7 @@
 import re
 import pandas as pd
 from time import time
-from collections import defaultdict
 import spacy
-import numpy as np
-import matplotlib.pyplot as plt
-from gensim.models.phrases import Phrases, Phraser
-
-import logging  # Setting up the loggings to monitor gensim
-logging.basicConfig(format="%(levelname)s - %(asctime)s: %(message)s", datefmt= '%H:%M:%S', level=logging.INFO)
-
-
 
 def cleaning(doc):
     # Lemmatizes and removes stopwords
