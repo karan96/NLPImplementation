@@ -3,6 +3,7 @@ import pandas as pd
 from time import time
 import spacy
 
+#5. drop 'ing' for your function name=> clean(doc)
 def cleaning(doc):
     # Lemmatizes and removes stopwords
     # doc needs to be a spacy Doc object
@@ -13,6 +14,7 @@ def cleaning(doc):
     if len(txt) > 2:
         return ' '.join(txt)
 
+#6. I think because this is the first step of your pipeline you chose this name. But I suggest a better name such as load_corpus or sth like this.
 def first():
     df = pd.read_csv('D:\Desktop\Papers\Data\simpsons_dataset.csv')
     df = df.dropna().reset_index(drop=True)
