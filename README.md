@@ -17,3 +17,6 @@ python main.py
 # Output
 
 This projects works on finding the optimal hyperparameters set for Word2Vec and then compares it with WordSim GoldStandard True Words. Graphs of simialrit metrics cosine, euclidean and manhattan and iformation retrieval metrics such as map and ndcg is created after a successful execution.
+
+# References
+Pierre Megret - https://www.kaggle.com/pierremegret/gensim-word2vec-tutorial
