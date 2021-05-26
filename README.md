@@ -9,3 +9,11 @@ This project focuses on comparing the results of Word2Vec using Gensim implement
 3. NLTK Brown Corpus - from nltk.corpus import brown
 4. Spacy - !pip install spacy
 5. Simpsons Dataset from Kaggle
+6. WordSim GoldStandard Dataset - Download it from http://alfonseca.org/pubs/ws353simrel.tar.gz." and Unzip wordsim_similarity_goldstandard into the evaluation folder.
+
+# Running the Code
+python main.py
+
+# Output
+
+This projects works on finding the optimal hyperparameters set for Word2Vec and then compares it with WordSim GoldStandard True Words. Graphs of simialrit metrics cosine, euclidean and manhattan and iformation retrieval metrics such as map and ndcg is created after a successful execution.
