@@ -4,12 +4,12 @@ from gensim.models import Word2Vec
 
 def process(path_to_file):
     word_dic = {}
-    file_path = path_to_file + 'wordsim_similarity_goldstandard.txt'
+    file_path = path_to_file
     wordsim_df = pd.read_csv(file_path, sep='\t', header=None)
 
     wordsim_df.columns = ['Pair_1', 'Pair_2', 'Sim_Score']
 
-    clean_wordsim = wordsim_df.loc[wordsim_df['Pair_1'] != wordsim_df['Animal_2']]
+    clean_wordsim = wordsim_df.loc[wordsim_df['Pair_1'] != wordsim_df['Pair_2']]
     clean_wordsim.reset_index().drop('index', axis=1, inplace=True)
 
     empty_lists = 0

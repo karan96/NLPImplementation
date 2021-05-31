@@ -9,26 +9,17 @@ def manhattan_distance(x, y):
     return sum(abs(a - b) for a, b in zip(x, y))
 
 
-def calculate_sim(path_to_file, w, d, true_dict, metrics, sample_word, sim_name):
-    os.chdir(path_to_file)
+def calculate_sim(path_to_file, models, true_dict, metrics, sample_word, sim_name):
+    #os.chdir(path_to_file)
     df = pd.DataFrame()
     temp_dict = {}
     count = 0
     pytrec_dict = {}
-    metric_string = ''
-    for item in range(len(metrics)):
-        if item != len(metrics) - 1:
-            temp = f'\'{metrics[item]}\','
-            metric_string = metric_string + temp
-        else:
-            temp = f'\'{metrics[item]}\''
-            metric_string = metric_string + temp
-    for window in w:
-        for size in d:
-            model_name = "w2v_new_model_window-{}_size-{}.mdl".format(window, size)
-            column_name = "W2V_model_window-{}_size-{}.mdl".format(window, size)
-            first_model = f'{model_name}'
-            loaded_wv_first = Word2Vec.load(first_model)
+    for model in models:
+            model_name = model
+            column_name = model
+            first_model = model
+            loaded_wv_first = Word2Vec.load(f'{path_to_file}{first_model}')
             if sim_name == 'cos':
                 sim_score = loaded_wv_first.wv.most_similar(positive=[sample_word])
                 if df.empty:
@@ -60,8 +51,7 @@ def calculate_sim(path_to_file, w, d, true_dict, metrics, sample_word, sim_name)
                     df = pd.concat([df, euc_df], axis=1)
 
             qrel = {
-                sample_word: {true_dict[sample_word]
-                              }
+                sample_word: true_dict[sample_word]
                 }
 
             run = {
@@ -80,7 +70,7 @@ def calculate_sim(path_to_file, w, d, true_dict, metrics, sample_word, sim_name)
             }
 
             evaluator = pytrec_eval.RelevanceEvaluator(
-                qrel, {metric_string})
+                qrel, metrics)
             pytrec_dict.update(evaluator.evaluate(run))
             count += 1
     filename = f"W2V_{sim_name}_similarity_{sample_word}.csv"
@@ -90,25 +80,16 @@ def calculate_sim(path_to_file, w, d, true_dict, metrics, sample_word, sim_name)
     return pytrec_dict, filename
 
 
-def evaluate(simpsons_data, w, d, distance_metric, metrics, results_path, word_dict):
+def evaluate(path_to_file, models, distance_metric, metrics, results_path, word_dict):
     df = pd.DataFrame()
     temp_dict = {}
     pytrec_dict = {}
     count = 0
-    metric_string = ''
-    for item in range(len(metrics)):
-        if item != len(metrics) - 1:
-            temp = f'\'{metrics[item]}\','
-            metric_string = metric_string + temp
-        else:
-            temp = f'\'{metrics[item]}\''
-            metric_string = metric_string + temp
-    for window in w[:1]:
-        for size in d[:1]:
-            model_name = "w2v_new_model_window-{}_size-{}.mdl".format(window, size)
-            column_name = "W2V_model_window-{}_size-{}.mdl".format(window, size)
-            first_model = f'{simpsons_data}\\{model_name}'
-            loaded_wv_first = Word2Vec.load(first_model)
+    for model in models:
+            model_name = model
+            column_name = model
+            first_model = model
+            loaded_wv_first = Word2Vec.load(f'{path_to_file}{first_model}')
             for word, val in word_dict.items():
                 if word in list(loaded_wv_first.wv.vocab):
                     for sim_name in distance_metric:
@@ -162,7 +143,7 @@ def evaluate(simpsons_data, w, d, distance_metric, metrics, results_path, word_d
                     }
 
                     evaluator = pytrec_eval.RelevanceEvaluator(
-                        qrel, {metric_string})
+                        qrel, metrics)
                     pytrec_dict.update(evaluator.evaluate(run))
                     count += 1
             df.to_csv(results_path)
