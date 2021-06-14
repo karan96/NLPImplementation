@@ -1,0 +1,5 @@
+,model_name,similarity
+0,money,"{'map': 0.0, 'ndcg': 0.0}"
+1,car,"{'map': 0.0, 'ndcg': 0.0}"
+2,man,"{'map': 0.0, 'ndcg': 0.0}"
+3,stock,"{'map': 0.0, 'ndcg': 0.0}"
